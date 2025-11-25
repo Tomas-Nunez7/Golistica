@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Golística - Reserva de Canchas</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <style>
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                        url("/static/img/hero-bg.jpg");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        .court-image {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- Barra de navegación -->
+    <nav class="bg-green-700 text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-3">
+                    <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo Golística" class="h-10 w-10">
+                    <span class="font-bold text-2xl text-white">Golística</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="#inicio" class="hover:text-green-200 transition">Inicio</a>
+                    <a href="#canchas" class="hover:text-green-200 transition">Canchas</a>
+                    <a href="#reservas" class="hover:text-green-200 transition">Mis Reservas</a>
+                    <button id="loginBtn" class="bg-white text-green-700 px-4 py-2 rounded-lg font-medium hover:bg-green-100 transition">
+                        Iniciar Sesión
+                    </button>
+                </div>
+                <button class="md:hidden text-xl">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="inicio" class="hero-section text-white py-32">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6">Bienvenido a Golística</h1>
+            <p class="text-xl md:text-2xl mb-8">Encuentra y reserva canchas disponibles en tiempo real</p>
+            <a href="#reservar" class="bg-white text-green-700 px-8 py-3 rounded-full font-bold text-lg hover:bg-green-100 transition inline-block">
+                Reservar Ahora
+            </a>
+        </div>
+    </header>
+
+    <!-- Sección de Canchas -->
+    <section id="canchas" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">Nuestras Canchas</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="canchasContainer">
+                <!-- Cancha 1 -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden court-card">
+                    <img src="/static/img/Proyecto-Cicadex-Greendex-Proquinal-5.webp" alt="Cancha 1" class="court-image">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Cancha 1</h3>
+                        <p class="text-gray-600 mb-4">Césped sintético de última generación</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-lg">$2.500/h</span>
+                            <button class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">
+                                Ver Disponibilidad
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cancha 2 -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden court-card">
+                    <img src="/static/img/cancha2.jpg" alt="Cancha 2" class="court-image">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Cancha 2</h3>
+                        <p class="text-gray-600 mb-4">Piso de césped sintético profesional</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-lg">$2.800/h</span>
+                            <button class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">
+                                Ver Disponibilidad
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cancha 3 -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden court-card">
+                    <img src="/static/img/unnamed.jpg" alt="Cancha 3" class="court-image">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Cancha 3</h3>
+                        <p class="text-gray-600 mb-4">Cancha techada con iluminación LED</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-lg">$3.200/h</span>
+                            <button class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">
+                                Ver Disponibilidad
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Reservas -->
+    <section id="reservas" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">Mis Reservas</h2>
+            <div class="bg-white rounded-xl shadow-md p-6">
+                <div id="reservasContainer" class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cancha</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hora</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200" id="reservasList">
+                            <!-- Las reservas se cargarán dinámicamente aquí -->
+                            <tr>
+                                <td colspan="5" class="px-6 py-4 text-center text-gray-500">
+                                    Inicia sesión para ver tus reservas
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal de Inicio de Sesión -->
+    <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-xl p-8 max-w-md w-full mx-4">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-gray-800">Iniciar Sesión</h3>
+                <button id="closeModal" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <form id="loginForm">
+                <div class="mb-4">
+                    <label for="username" class="block text-gray-700 mb-2">Usuario</label>
+                    <input type="text" id="username" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                </div>
+                <div class="mb-6">
+                    <label for="password" class="block text-gray-700 mb-2">Contraseña</label>
+                    <input type="password" id="password" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                </div>
+                <button type="submit" class="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition font-medium">
+                    Ingresar
+                </button>
+            </form>
+            <p class="text-center mt-4 text-gray-600">
+                ¿No tienes una cuenta? 
+                <a href="#" class="text-green-600 hover:underline">Regístrate aquí</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Fútbol 5 Reservas</h3>
+                    <p class="text-gray-400">Tu mejor opción para reservar canchas de fútbol 5 de manera rápida y sencilla.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Enlaces Rápidos</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#inicio" class="text-gray-400 hover:text-white transition">Inicio</a></li>
+                        <li><a href="#canchas" class="text-gray-400 hover:text-white transition">Canchas</a></li>
+                        <li><a href="#reservas" class="text-gray-400 hover:text-white transition">Mis Reservas</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contacto</h4>
+                    <p class="text-gray-400">Email: info@futbol5reservas.com</p>
+                    <p class="text-gray-400">Teléfono: (123) 456-7890</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 Fútbol 5 Reservas. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
