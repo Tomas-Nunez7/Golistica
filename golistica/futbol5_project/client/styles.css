@@ -1,6 +1,0 @@
-body { font-family: Arial, Helvetica, sans-serif; margin: 0; padding: 0; }
-nav { background: #0b6; padding: 10px; display:flex; gap:10px; }
-nav a { color: #003; text-decoration: none; font-weight: bold; }
-main { padding: 20px; }
-input, button, select { padding:8px; margin:6px 0; display:block; }
-.toast { background:#ffd; padding:8px; border:1px solid #cc9; margin-bottom:8px; }
