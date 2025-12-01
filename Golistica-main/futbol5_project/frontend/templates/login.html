@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión - Golística</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div class="bg-white p-8 rounded-lg shadow-md w-96">
+        <h1 class="text-2xl font-bold mb-6 text-center">Iniciar Sesión</h1>
+
+        <div id="login-message" class="mb-4 text-sm text-center"></div>
+
+        <form id="login-form" class="space-y-4">
+            <div>
+                <label for="username" class="block text-sm font-medium text-gray-700">Usuario</label>
+                <input type="text" id="username" name="username" required
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500">
+            </div>
+            
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700">Contraseña</label>
+                <input type="password" id="password" name="password" required
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500">
+            </div>
+            
+            <div>
+                <button type="submit"
+                    class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                    Iniciar Sesión
+                </button>
+            </div>
+        </form>
+        
+        <div class="mt-4 text-center">
+            <p class="text-sm text-gray-600">
+                ¿No tienes una cuenta? 
+                <a href="registro.html" class="font-medium text-green-600 hover:text-green-500">Regístrate</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('login-form');
+            const msg = document.getElementById('login-message');
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                msg.textContent = '';
+                msg.className = 'mb-4 text-sm text-center';
+
+                const username = document.getElementById('username').value.trim();
+                const password = document.getElementById('password').value;
+
+                const body = new URLSearchParams();
+                body.append('username', username);
+                body.append('password', password);
+
+                try {
+                    const resp = await fetch('http://localhost:8000/api/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body,
+                    });
+
+                    if (!resp.ok) {
+                        msg.textContent = 'Usuario o contraseña incorrectos.';
+                        msg.className = 'mb-4 text-sm text-center text-red-600';
+                        console.error('Error de login', resp.status);
+                        return;
+                    }
+
+                    const data = await resp.json();
+                    localStorage.setItem('golistica_token', data.access_token);
+                    msg.textContent = 'Login exitoso, redirigiendo...';
+                    msg.className = 'mb-4 text-sm text-center text-green-600';
+
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 800);
+                } catch (err) {
+                    console.error('Error llamando a /api/login', err);
+                    msg.textContent = 'Error de conexión con el servidor.';
+                    msg.className = 'mb-4 text-sm text-center text-red-600';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
